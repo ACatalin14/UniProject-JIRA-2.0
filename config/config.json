@@ -1,6 +1,9 @@
 {
     "development": {
         "dialect": "sqlite",
-        "storage": "storage/db.sqlite"
+        "storage": "storage/db.sqlite",
+        "define": {
+            "timestamps": false
+        }
     }
 }

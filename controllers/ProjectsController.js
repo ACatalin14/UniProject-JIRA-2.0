@@ -27,6 +27,7 @@ const ProjectsController = {
             .create({
                 title: body.title,
                 url: body.url
+                // TODO: creatorId: body.creatorId
             })
             .then(project => {
                 return res.send(project);
@@ -37,7 +38,11 @@ const ProjectsController = {
         const id = req.params.id;
         models
             .Project
-            .update(body, { where: { id: id }})
+            .update(body, {
+                where: {
+                    projectId: id
+                }
+            })
             .then(updated => {
                 models
                     .Project
@@ -51,7 +56,7 @@ const ProjectsController = {
             .Project
             .destroy({
                 where: {
-                    id: id,
+                    projectId: id,
                 }
             })
             .then(data => {
