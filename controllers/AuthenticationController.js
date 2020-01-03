@@ -33,8 +33,8 @@ const AuthenticationController = {
                         })
                         .save();
 
-                    return jwt.sign(uniqueIdentificationObject, config.JWTSECRET, (err, token) => {
-
+                    return jwt.sign(data[0].dataValues, config.JWTSECRET, (err, token) => {
+                        console.log(data[0].dataValues);
                         return res.send({
                             token: token,
                         });

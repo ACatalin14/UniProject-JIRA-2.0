@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     // TODO: Project.belongsTo(models['Employee'], {foreignKey: 'creatorId'});
     // TODO DETALII: https://medium.com/@andrewoons/how-to-define-sequelize-associations-using-migrations-de4333bf75a7
+
+    Project.belongsTo(models.User,{foreignKey: 'creatorId'});
+    Project.hasMany(models.Task);
+
   };
   return Project;
 };

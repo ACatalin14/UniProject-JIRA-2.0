@@ -26,8 +26,8 @@ const ProjectsController = {
             .Project
             .create({
                 title: body.title,
-                url: body.url
-                // TODO: creatorId: body.creatorId
+                url: body.url,
+                creatorId: body.userId
             })
             .then(project => {
                 return res.send(project);

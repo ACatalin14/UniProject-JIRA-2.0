@@ -29,6 +29,7 @@ module.exports = function(req, res, next) {
         const decodedTokenPayload = jwt.decode(tokenToVerify);
         req.body.userEmail = decodedTokenPayload.email;
         req.body.userPassword = decodedTokenPayload.password;
+        req.body.userId = decodedTokenPayload.userId;
 
         // check if user is logged in (maybe user has logged out but the token is still valid - not expired)
         models
