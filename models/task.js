@@ -3,7 +3,9 @@ module.exports = (sequelize, DataTypes) => {
   const Task = sequelize.define('Task', {
     taskId: {
       type: DataTypes.INTEGER,
-      primaryKey: true
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true
     },
     title: DataTypes.STRING,
     type: DataTypes.STRING,
@@ -14,9 +16,6 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Task.associate = function(models) {
     // associations can be defined here
-    // TODO: Task.belongsTo(models['Employee'], {foreignKey: 'creatorId'});
-    // TODO DETALII: https://medium.com/@andrewoons/how-to-define-sequelize-associations-using-migrations-de4333bf75a7
-
     Task.belongsTo(models.Project,{foreignKey: 'projectId'});
     Task.hasOne(models.TimeTracker);
     Task.belongsToMany(models.User,{through: "UserTask",foreignKey:"taskId"});
