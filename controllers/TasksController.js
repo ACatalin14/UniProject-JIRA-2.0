@@ -5,20 +5,28 @@ const TasksController = {
         models
             .Task
             .findByPk(req.params.taskId)
-            .then(data => {
-                if (!data) {
+            .then(task => {
+                if (!task) {
                     return res.send({});
                 }
-
-                return res.send(data);
+                models
+                    .TimeTracker
+                    .findByPk(req.params.taskId)
+                    .then(timeTracker=>{
+                        return res.send({task,timeTracker});
+                    })
             })
     },
     //Shows all tasks for a project. Not yet
     index: (req, res) => {
         models
             .Task
-            .findAll()
-            .then(data => res.send(data));
+            .findAll({
+                include : [{model: models.TimeTracker, required:true}]
+            })
+            .then(tasks => {
+               res.send(tasks);
+            })
 
     },
     create: (req, res) => {
@@ -35,7 +43,12 @@ const TasksController = {
                 projectId: req.params.projectId
             })
             .then(Task => {
-                return res.send(Task);
+                models.TimeTracker.create({
+                    taskId: Task.taskId
+                })
+                .then(TimeTracker => {
+                    return res.send({Task,TimeTracker});
+                });
             });
     },
     update: (req, res) => {
@@ -55,6 +68,23 @@ const TasksController = {
                     .then(data => res.send(data));
             });
     },
+    updateTimeTracker: (req,res) => {
+        const body = req.body;
+        const id = req.params.taskId;
+        models
+            .TimeTracker
+            .update(body, {
+                where: {
+                    taskId: id
+                }
+            })
+            .then(updated => {
+                models
+                    .TimeTracker
+                    .findByPk(id)
+                    .then(data => res.send(data));
+            });
+    },
     delete: (req, res) => {
         const id = req.params.taskId;
         models
@@ -65,7 +95,13 @@ const TasksController = {
                 }
             })
             .then(data => {
-                return res.send(true);
+                models.TimeTracker.destroy({
+                    where: {
+                        taskId: id
+                    }
+                }).then(()=>{
+                    return res.send(true);
+                })
             })
     },
 };

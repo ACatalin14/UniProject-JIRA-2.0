@@ -40,6 +40,7 @@ router.get('/projects/:projectId/tasks',authenticationMiddleware,tasksController
 router.get('/projects/:projectId/tasks/:taskId',authenticationMiddleware,tasksController.show);
 router.post('/projects/:projectId/tasks',authenticationMiddleware,ownsProjectMiddleware,tasksController.create);
 router.put('/projects/:projectId/tasks/:taskId',authenticationMiddleware,ownsProjectMiddleware,tasksController.update);
+router.put('/projects/:projectId/tasks/:taskId/updateTimeTracker',authenticationMiddleware,ownsProjectMiddleware,tasksController.updateTimeTracker);
 router.delete('/projects/:projectId/tasks/:taskId',authenticationMiddleware,ownsProjectMiddleware,tasksController.delete);
 
 module.exports = router;
