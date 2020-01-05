@@ -4,17 +4,14 @@ const TasksController = {
     show: (req, res) => {
         models
             .Task
-            .findByPk(req.params.taskId)
+            .findByPk(req.params.taskId,{
+                include: [{model: models.TimeTracker}]
+            })
             .then(task => {
                 if (!task) {
                     return res.send({});
                 }
-                models
-                    .TimeTracker
-                    .findByPk(req.params.taskId)
-                    .then(timeTracker=>{
-                        return res.send({task,timeTracker});
-                    })
+                return res.send(task);
             })
     },
     //Shows all tasks for a project. Not yet
@@ -22,7 +19,7 @@ const TasksController = {
         models
             .Task
             .findAll({
-                include : [{model: models.TimeTracker, required:true}]
+                include : [{model: models.TimeTracker}]
             })
             .then(tasks => {
                res.send(tasks);
@@ -44,7 +41,10 @@ const TasksController = {
             })
             .then(Task => {
                 models.TimeTracker.create({
-                    taskId: Task.taskId
+                    taskId: Task.taskId,
+                    estimated: body.TimeTracker.estimated,
+                    remaining: body.TimeTracker.remaining,
+                    logged: body.TimeTracker.logged
                 })
                 .then(TimeTracker => {
                     return res.send({Task,TimeTracker});
@@ -61,28 +61,20 @@ const TasksController = {
                     taskId: id
                 }
             })
-            .then(updated => {
-                models
-                    .Task
-                    .findByPk(id)
-                    .then(data => res.send(data));
-            });
-    },
-    updateTimeTracker: (req,res) => {
-        const body = req.body;
-        const id = req.params.taskId;
-        models
-            .TimeTracker
-            .update(body, {
-                where: {
-                    taskId: id
-                }
-            })
-            .then(updated => {
+            .then(resultTask => {
                 models
                     .TimeTracker
-                    .findByPk(id)
-                    .then(data => res.send(data));
+                    .update(body.TimeTracker,{
+                        where:{
+                            taskId: id
+                        }
+                    }).then(resultTimeTracker=>{
+                        models
+                            .Task
+                            .findByPk(id,{
+                                include: [{model: models.TimeTracker}]
+                            }).then(data=>res.send(data));     
+                    })
             });
     },
     delete: (req, res) => {
