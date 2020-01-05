@@ -1,10 +1,10 @@
 const models = require('../models');
 
-const ProjectsController = {
+const TasksController = {
     show: (req, res) => {
         models
-            .Project
-            .findByPk(req.params.id)
+            .Task
+            .findByPk(req.params.taskId)
             .then(data => {
                 if (!data) {
                     return res.send({});
@@ -13,51 +13,55 @@ const ProjectsController = {
                 return res.send(data);
             })
     },
+    //Shows all tasks for a project. Not yet
     index: (req, res) => {
         models
-            .Project
+            .Task
             .findAll()
             .then(data => res.send(data));
 
     },
     create: (req, res) => {
         const body = req.body;
-        console.log(body.userId);
         models
-            .Project
+            .Task
             .create({
                 title: body.title,
-                url: body.url,
-                creatorId: body.userId
+                type: body.type,
+                priority: body.priority,
+                status: body.status,
+                resolution: body.resolution,
+                description: body.description,
+                projectId: req.params.projectId
             })
-            .then(project => {
-                return res.send(project);
+            .then(Task => {
+                return res.send(Task);
             });
     },
     update: (req, res) => {
         const body = req.body;
-        const id = req.params.id;
+        const id = req.params.taskId;
         models
-            .Project
+            .Task
             .update(body, {
                 where: {
-                    projectId: id
+                    taskId: id
                 }
             })
             .then(updated => {
                 models
-                    .Project
+                    .Task
                     .findByPk(id)
                     .then(data => res.send(data));
             });
     },
     delete: (req, res) => {
-        const id = req.params.id;
+        const id = req.params.taskId;
         models
-            .Project
+            .Task
             .destroy({
                 where: {
-                    projectId: id,
+                    taskId: id,
                 }
             })
             .then(data => {
@@ -66,4 +70,4 @@ const ProjectsController = {
     },
 };
 
-module.exports = ProjectsController;
+module.exports = TasksController;

@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   Project.associate = function(models) {
     // associations can be defined here
     Project.belongsTo(models.User,{foreignKey: 'creatorId'});
-    Project.hasMany(models.Task);
+    Project.hasMany(models.Task,{foreignKey:'projectId'});
 
   };
   return Project;

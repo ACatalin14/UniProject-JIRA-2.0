@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   Task.associate = function(models) {
     // associations can be defined here
     Task.belongsTo(models.Project,{foreignKey: 'projectId'});
-    Task.hasOne(models.TimeTracker);
+    Task.hasOne(models.TimeTracker,{foreignKey:'taskId'});
     Task.belongsToMany(models.User,{through: "UserTask",foreignKey:"taskId"});
 
   };

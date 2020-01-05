@@ -1,8 +1,10 @@
 const express = require('express');
 const projectsController = require('./controllers/ProjectsController');
 const usersController = require('./controllers/UsersController');
+const tasksController = require('./controllers/TasksController');
 const authenticationController = require('./controllers/AuthenticationController');
 const authenticationMiddleware = require('./middlewares/authentication');
+const ownsProjectMiddleware = require('./middlewares/ownsProject');
 
 const router = express.Router();
 
@@ -32,5 +34,12 @@ router.put('/projects/:id', projectsController.update);
 
 router.delete('/projects/:id', authenticationMiddleware);
 router.delete('/projects/:id', projectsController.delete);
+
+
+router.get('/projects/:projectId/tasks',authenticationMiddleware,tasksController.index);
+router.get('/projects/:projectId/tasks/:taskId',authenticationMiddleware,tasksController.show);
+router.post('/projects/:projectId/tasks',authenticationMiddleware,ownsProjectMiddleware,tasksController.create);
+router.put('/projects/:projectId/tasks/:taskId',authenticationMiddleware,ownsProjectMiddleware,tasksController.update);
+router.delete('/projects/:projectId/tasks/:taskId',authenticationMiddleware,ownsProjectMiddleware,tasksController.delete);
 
 module.exports = router;

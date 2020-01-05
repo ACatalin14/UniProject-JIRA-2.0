@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function(models) {
     // associations can be defined here
     // TODO SA FACEM CA AICI: https://medium.com/@andrewoons/how-to-define-sequelize-associations-using-migrations-de4333bf75a7
-    User.hasMany(models.Project);
+    User.hasMany(models.Project,{foreignKey:"creatorId"});
     User.belongsToMany(models.Task,{through: "UserTask",foreignKey:"userId"});
   };
   return User;
