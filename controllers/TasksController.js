@@ -14,43 +14,6 @@ const TasksController = {
                 return res.send(task);
             })
     },
-    //Shows all tasks for a project. Not yet
-    index: (req, res) => {
-        models
-            .Task
-            .findAll({
-                include : [{model: models.TimeTracker}]
-            })
-            .then(tasks => {
-               res.send(tasks);
-            })
-
-    },
-    create: (req, res) => {
-        const body = req.body;
-        models
-            .Task
-            .create({
-                title: body.title,
-                type: body.type,
-                priority: body.priority,
-                status: body.status,
-                resolution: body.resolution,
-                description: body.description,
-                projectId: req.params.projectId
-            })
-            .then(Task => {
-                models.TimeTracker.create({
-                    taskId: Task.taskId,
-                    estimated: body.TimeTracker.estimated,
-                    remaining: body.TimeTracker.remaining,
-                    logged: body.TimeTracker.logged
-                })
-                .then(TimeTracker => {
-                    return res.send({Task,TimeTracker});
-                });
-            });
-    },
     update: (req, res) => {
         const body = req.body;
         const id = req.params.taskId;
