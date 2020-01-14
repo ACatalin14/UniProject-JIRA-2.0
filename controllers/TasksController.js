@@ -14,6 +14,14 @@ const TasksController = {
                 return res.send(task);
             })
     },
+    index: (req,res)=>{
+        models
+            .Task
+            .FindAll()
+            .then(results=>{
+                res.send(results);
+            })
+    },
     update: (req, res) => {
         const body = req.body;
         const id = req.params.taskId;

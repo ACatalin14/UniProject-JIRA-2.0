@@ -37,28 +37,24 @@ router.put('/projects/:id', projectsController.update);
 router.delete('/projects/:id', authenticationMiddleware);
 router.delete('/projects/:id', projectsController.delete);
 
-//Rutele sunt temporare (cred?) pana gasim o sol mai buna :))
-
 //projectsTasksController
-router.get('/projects/:projectId/tasks',authenticationMiddleware,projectsTasksController.index); 
+router.get('/projects/:projectId/tasks',projectsTasksController.index); 
 router.post('/projects/:projectId/tasks',authenticationMiddleware,ownsProjectMiddleware,projectsTasksController.create);
 
 //tasks controller
-router.get('/tasks/:taskId',authenticationMiddleware,tasksController.show);
-router.put('/tasks/:taskId',authenticationMiddleware,ownsProjectMiddleware,tasksController.update);
-router.delete('/tasks/:taskId',authenticationMiddleware,ownsProjectMiddleware,tasksController.delete);
+router.get('/tasks/:taskId',tasksController.show);
+router.get('/tasks',tasksController.index);
+router.put('/tasks/:taskId',authenticationMiddleware,tasksController.update);
+router.delete('/tasks/:taskId',authenticationMiddleware,tasksController.delete);
 
 //usersTasksController
-//idee de ruta mai buna?
-router.post('/users/:userId/tasks',usersTasksController.addTaskToUser);
 /*
     primeste {
-        "taskId": 
-        "role":
+        "role": "role"
     }
 */
-
+router.post('/users/:userId/tasks/:taskId',authenticationMiddleware,usersTasksController.addTaskToUser);
 router.get('/users/:userId/tasks',usersTasksController.getAllTasksForUser);
-//router.get('/tasks/:taskId/users',usersTasksController.getAllUsersForTask);
+router.get('/tasks/:taskId/users',usersTasksController.getAllUsersForTask);
 
 module.exports = router;
