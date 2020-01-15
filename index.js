@@ -11,6 +11,7 @@ app.use(router);
 
 app.listen(port, () => console.log(`JIRA app listening on port ${port}!`));
 
+module.exports = app;
 /**
  *     SQL small seeder:
 

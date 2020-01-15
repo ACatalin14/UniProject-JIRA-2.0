@@ -5,5 +5,10 @@
         "define": {
             "timestamps": false
         }
-    }
+    },
+    "test": {
+        "dialect": "sqlite",
+        "storage": "storage/test_db.sqlite",
+        "logging": false
+      }
 }
