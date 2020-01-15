@@ -3,7 +3,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
       return queryInterface.bulkInsert('Tasks', [
-       //PROJECT 109 - Infiltrate the ministry, initated by Kingsley Shackebolt(id=10) 
+       //PROJECT 1 - Infiltrate the ministry, initated by Kingsley Shackebolt(id=10)
       {
         title: "Get access cards",
         type: "front-end",
@@ -11,7 +11,7 @@ module.exports = {
         status: "in-progress",
         resolution: "",
         description: "Get access cards in order to bypass ministry security",
-        projectId: 109
+        projectId: 1
       },
       {
         title: "Gather intelligence",
@@ -20,7 +20,7 @@ module.exports = {
         status: "in-progress",
         resolution: "",
         description: "Gather as much information as possible",
-        projectId: 109
+        projectId: 1
       },
       {
         title: "Set up a team",
@@ -29,9 +29,9 @@ module.exports = {
         status: "in-progress",
         resolution: "",
         description: "Construct a team of people for the break-in",
-        projectId: 109
+        projectId: 1
       },
-      //PROJECT 111 - Place an order of unicorn hair, initated by Garrick Olivander(id=5)
+      //PROJECT 3 - Place an order of unicorn hair, initated by Garrick Olivander(id=3)
       {
         title: "Place the order",
         type: "front-end",
@@ -39,9 +39,9 @@ module.exports = {
         status: "in-progress",
         resolution: "",
         description: "Access the black marcket and order 10 strands of unicorn hair",
-        projectId: 111
+        projectId: 3
       },
-      //Project 112 - Manufacture 3 winter robes, initated by Madam Malkin(id=6)
+      //Project 4 - Manufacture 3 winter robes, initated by Madam Malkin(id=4)
       {
         title: "Sew the robes",
         type: "back-end",
@@ -49,7 +49,7 @@ module.exports = {
         status: "in-progress",
         resolution: "",
         description: "Sew the material",
-        projectId: 112
+        projectId: 4
       },
       {
         title: "Add finishing touches",
@@ -58,7 +58,7 @@ module.exports = {
         status: "in-progress",
         resolution: "",
         description: "Add detail and polish",
-        projectId: 112
+        projectId: 4
       }
     ], {});
   },
