@@ -9,6 +9,9 @@
     "test": {
         "dialect": "sqlite",
         "storage": "storage/test_db.sqlite",
-        "logging": false
+        "logging": false,
+        "define": {
+            "timestamps": false
+        }
       }
 }
